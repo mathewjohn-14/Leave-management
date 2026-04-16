@@ -8,7 +8,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = "https://github.com/mathewjohn-14/Leave-management.git"
+        DOCKER_IMAGE = "senthamizhan14/leave-management-system:latest"
     }
 
     stages {
