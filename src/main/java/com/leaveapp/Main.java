@@ -1,27 +1,21 @@
 package com.leaveapp;
 
-// These MUST be exactly like this
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.ipAddress;
+import static spark.Spark.port;
 
 public class Main {
     public static void main(String[] args) {
-        // Set the port to 8080 (standard for containers)
-        port(8080);
+        // CRITICAL: This allows external traffic to reach the Spark server
+        ipAddress("0.0.0.0"); 
+        
+        port(8087);
 
-        System.out.println("Web Server starting on port 8080...");
-
-        // Define the browser response
         get("/", (req, res) -> {
-            LeaveManager manager = new LeaveManager();
-            Employee emp = new Employee("E001", "Senthamizhan", 15);
-            LeaveRequest leaveReq = new LeaveRequest("REQ-101", emp, 5);
-            
-            manager.processLeaveRequest(leaveReq);
-
-            return "<h1>Employee Leave Management System</h1>" +
-                   "<p>Employee: " + emp.getId() + "</p>" +
-                   "<p>Status: <b>" + leaveReq.getStatus() + "</b></p>" +
-                   "<p>Remaining Balance: " + emp.getLeaveBalance() + " days</p>";
+            res.type("text/html");
+            return "<h1>Leave Management System</h1><p>Status: Running in Kubernetes!</p>";
         });
+        
+        System.out.println("Web Server is now listening on http://0.0.0.0:8080");
     }
 }
